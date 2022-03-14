@@ -31,8 +31,8 @@ const getFreeSlots = async(req, res) => {
     }
 
     for(let i = 0; i < allMeetings.length - 1;i++) {
-      let firstEndTime = allMeetings[i].endTime;
-      let secondStartTime = allMeetings[i + 1].startTime;
+      let firstEndTime = allMeetings[i].endTime + 60000;
+      let secondStartTime = allMeetings[i + 1].startTime - 60000;
       if(secondStartTime - firstEndTime > 0) {
         freeSlots.push({
           from: firstEndTime,
