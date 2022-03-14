@@ -24,18 +24,22 @@ const scheduleMeet = async (req, res) => {
 
     const dayStartTime = Number(moment(date + process.env.STARTTIME, 'DD/MM/YYYY HH:mm'));
     const dayendTime = Number(moment(date + process.env.ENDTIME, 'DD/MM/YYYY HH:mm'));
-
     const allMeetings = await meetingDate.find({ dateValue: date }).lean();
+
+    if (
+      (queryObj.startTime < dayStartTime) ||
+      (queryObj.endTime > dayendTime)
+    ) {
+      throw new Error('Timing lies outside of schedule.')
+    }
     for(let meeting of allMeetings) {
       if(
         (queryObj.startTime <= meeting.startTime && queryObj.startTime <= meeting.endTime && queryObj.endTime >= meeting.startTime && queryObj.endTime <= meeting.endTime) ||
         (queryObj.startTime >= meeting.startTime && queryObj.startTime <= meeting.endTime && queryObj.endTime >= meeting.startTime && queryObj.endTime <= meeting.endTime) ||
-        (queryObj.startTime >= meeting.startTime && queryObj.startTime <= meeting.endTime && queryObj.endTime >= meeting.startTime && queryObj.endTime >= meeting.endTime) ||
-        (queryObj.startTime === meeting.startTime && queryObj.endTime === meeting.endTime) || 
-        (queryObj.startTime < dayStartTime || queryObj.endTime > dayendTime)
-        ) {
-          throw new Error('Already occupied');
-        }
+        (queryObj.startTime >= meeting.startTime && queryObj.startTime <= meeting.endTime && queryObj.endTime >= meeting.startTime && queryObj.endTime >= meeting.endTime)
+      ) {
+        throw new Error('Already occupied.');
+      }
     }
 
     const createdMeet = await meetingDate.create(queryObj);
