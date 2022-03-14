@@ -31,7 +31,7 @@ const scheduleMeet = async (req, res) => {
         (queryObj.startTime <= meeting.startTime && queryObj.startTime <= meeting.endTime && queryObj.endTime >= meeting.startTime && queryObj.endTime <= meeting.endTime) ||
         (queryObj.startTime >= meeting.startTime && queryObj.startTime <= meeting.endTime && queryObj.endTime >= meeting.startTime && queryObj.endTime <= meeting.endTime) ||
         (queryObj.startTime >= meeting.startTime && queryObj.startTime <= meeting.endTime && queryObj.endTime >= meeting.startTime && queryObj.endTime >= meeting.endTime) ||
-        (queryObj.startTime === meeting.startTime && queryObj.endTime === meeting.endTime)
+        (queryObj.startTime === meeting.startTime && queryObj.endTime === meeting.endTime) || 
         (queryObj.startTime < dayStartTime || queryObj.endTime > dayendTime)
         ) {
           throw new Error('Already occupied');
