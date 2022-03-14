@@ -2,7 +2,7 @@ const Router = require('express').Router();
 const path = require('path');
 const { scheduleMeet } = require(path.resolve(__dirname, '..', 'Controllers', 'scheduleMeet'));
 const { getFreeSlots } = require(path.resolve(__dirname, '..', 'Controllers', 'getFreeSlots'));
-const { getAllSlots } = require(path.resolve(__dirname, '..', 'Controllers', 'getAllSlots'));
+const { getAllOccupiedSlots } = require(path.resolve(__dirname, '..', 'Controllers', 'getAllOccupiedSlots'));
 
 // schedule a meeting on a given date.
 Router.post('/schedule', scheduleMeet);
@@ -11,7 +11,7 @@ Router.post('/schedule', scheduleMeet);
 Router.post('/freeslots', getFreeSlots);
 
 // get list of all time slots for a particular date
-Router.post('/getallslots', getAllSlots);
+Router.post('/getallslots', getAllOccupiedSlots);
 
 module.exports = {
   Router,

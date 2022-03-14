@@ -3,7 +3,7 @@ const path = require('path');
 const moment = require('moment');
 const { meetingDate } = require (path.resolve(__dirname, '..', 'Database', 'Models', 'MeetingDates'));
 
-const getAllSlots = async (req, res) => {
+const getAllOccupiedSlots = async (req, res) => {
   try {
     const { date } = _.pick(req.body, ['date']);
     if(!date) {
@@ -24,5 +24,5 @@ const getAllSlots = async (req, res) => {
 }
 
 module.exports = {
-  getAllSlots,
+  getAllOccupiedSlots,
 }
