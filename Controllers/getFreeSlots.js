@@ -30,6 +30,17 @@ const getFreeSlots = async(req, res) => {
       })
     }
 
+    for(let i = 0; i < allMeetings.length - 1;i++) {
+      let firstEndTime = allMeetings[i].endTime;
+      let secondStartTime = allMeetings[i + 1].startTime;
+      if(secondStartTime - firstEndTime > 0) {
+        freeSlots.push({
+          from: firstEndTime,
+          to: secondStartTime,
+        });
+      }
+    }
+
     for (let slot of freeSlots) {
       slot.from = moment(slot.from).format('DD/MM/YYYY HH:mm');
       slot.to = moment(slot.to).format('DD/MM/YYYY HH:mm');
