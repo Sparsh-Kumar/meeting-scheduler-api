@@ -26,6 +26,10 @@ const scheduleMeet = async (req, res) => {
     const dayendTime = Number(moment(date + process.env.ENDTIME, 'DD/MM/YYYY HH:mm'));
     const allMeetings = await meetingDate.find({ dateValue: date }).lean();
 
+    if (queryObj.endTime - queryObj.startTime < 0) {
+      throw new Error('End time cannot be less than start time.');
+    }
+    
     if (
       (queryObj.startTime < dayStartTime) ||
       (queryObj.endTime > dayendTime)
